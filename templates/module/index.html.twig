@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Module index
+{% endblock %}
+
+{% block body %}
+	<h1>Module index</h1>
+
+
+	{% for module in modules %}
+		<div class="card mb-3">
+			<div class="card-body">
+				<h5>{{ module.nom }}</h5>
+
+				<p>
+					Etat :
+					{% if module.etat === true %}
+						<span class="badge bg-success">En marche</span>
+					{% else %}
+						<span class="badge bg-danger">En panne</span>
+					{% endif %}
+				</p>
+
+				<p>Durée :
+					{{ module.ajout ? module.ajout.diff(date()).days }}
+					jours
+				</p>
+
+				{# <p>Total données :
+											{{ module.measurements|length }}
+										</p> #}
+				<a href="{{ path('app_module_show', {'id': module.id}) }}" class="btn btn-primary">Voir</a>
+			</div>
+		</div>
+	{% endfor %}
+
+
+	<a href="{{ path('app_module_new') }}">Create new</a>
+{% endblock %}
